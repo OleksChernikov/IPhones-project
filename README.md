@@ -1,5 +1,4 @@
 # React Phone catalog
-
 Developed to reinforce skills, for self-improvement, and without a commercial purpose.
 During the project development, HTML, SCSS, and React/TypeScript were used.
 
@@ -14,6 +13,6 @@ The project is built on functional components.
 [Project](https://olekschernikov.github.io/IPhones-project/#/)
 
 ### To work with the project locally, use the following commands
-```git clone``` + *URL* will allow you to download the project to your device
-```npm i``` loading project dependencies
-```npm start``` will launch the project and display it in the web browser at *http://localhost:3000/*
+- ```git clone``` + *URL* will allow you to download the project to your device
+- ```npm i``` loading project dependencies
+- ```npm start``` will launch the project and display it in the web browser at *http://localhost:3000/*
