@@ -1,6 +1,33 @@
 # React Phone catalog
 
-<marquee behavior="scroll" direction="left" scrollamount="10">WELCOME</marquee>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marquee Example</title>
+<style>
+.marquee {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+</style>
+</head>
+<body>
+
+<div class="marquee">
+  <span>WELCOME</span>
+</div>
+
+</body>
+</html>
 
 Developed to reinforce skills, for self-improvement, and without a commercial purpose.
 During the project development, HTML, SCSS, and React/TypeScript were used.
