@@ -12,12 +12,14 @@ import Close from '../../img/Close-black.svg';
 
 export const Header = () => {
   const { prevCartPhonesArr, setPrevCartPhonesArr } = useAppContext();
-  const { prevFavoriteArr } = useAppContext();
+  const { prevFavoriteArr, setPrevFavoriteArr } = useAppContext();
   const { urlState, setUrlState } = useAppContext();
   const { selectedProduct, setSelectedProduct } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   const { query, setQuery } = useAppContext();
   const { isMenuBurger, setIsMenuBurger } = useAppContext();
+  const { favoritePhones } = useAppContext();
+  // const { cartPhones } = useAppContext();
 
   const styles = {
     overflow: isMenuBurger ? 'hidden' : 'auto',
@@ -101,6 +103,13 @@ export const Header = () => {
       setQuery('');
     }
   };
+
+  useEffect(() => {
+    if (prevFavoriteArr) {
+      const newArr = prevFavoriteArr.filter((elem, index) => prevFavoriteArr.indexOf(elem) === index);
+      setPrevFavoriteArr(newArr);
+    }
+  }, [favoritePhones])
 
   return (
     <>

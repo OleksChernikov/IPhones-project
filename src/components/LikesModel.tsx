@@ -16,8 +16,8 @@ export const LikesModel = () => {
   const { prevFavoriteArr, setPrevFavoriteArr } = useAppContext();
   const { prevCartPhonesArr, setPrevCartPhonesArr } = useAppContext();
   const { favoritePhones, setFavoritePhones } = useAppContext();
-  const { cartPhones, setCartPhones } = useAppContext();
-  const { price, setPrice } = useAppContext();
+  const { setCartPhones } = useAppContext();
+  const { setPrice } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -72,6 +72,20 @@ export const LikesModel = () => {
 
   }, [translate]);
 
+  // const hanleChangeCartProducts = () => {
+  //   const newProductInCart = { id: cartPhones, count: 1, fullPrice: price };
+  //   if (cartPhones.trim() !== "") {
+  //     if (prevCartPhonesArr?.some(elem => elem.id === cartPhones)) {
+  //       setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr?.filter(phone => phone.id !== cartPhones));
+  //     } else {
+  //       setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr ? [...prevCartPhonesArr, newProductInCart] : [newProductInCart]);
+  //     }
+  //   }
+  //   console.log(newProductInCart);
+  //   setCartPhones('');
+  //   setPrice(0);
+  // }
+  
   useEffect(() => {
     if(prevCartPhonesArr) {
       localStorage.setItem('savedCartName',  JSON.stringify(prevCartPhonesArr));
@@ -95,19 +109,6 @@ export const LikesModel = () => {
     }
     setFavoritePhones(''); 
   }, [favoritePhones, prevFavoriteArr]);
-
-  useEffect(() => {
-    const newProductInCart = { id: cartPhones, count: 1, fullPrice: price };
-    if (cartPhones.trim() !== "") {
-      if (prevCartPhonesArr?.some(elem => elem.id === cartPhones)) {
-        setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr?.filter(phone => phone.id !== cartPhones));
-      } else {
-        setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr ? [...prevCartPhonesArr, newProductInCart] : [newProductInCart]);
-      }
-    }
-    setCartPhones('');
-    setPrice(0);
-  }, [cartPhones, prevCartPhonesArr]);
 
   const { setUrlState } = useAppContext();
 

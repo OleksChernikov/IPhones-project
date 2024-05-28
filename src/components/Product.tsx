@@ -110,7 +110,7 @@ export const ProductPage = () => {
 
   const { cartPhones, setCartPhones } = useAppContext();
   const { prevCartPhonesArr, setPrevCartPhonesArr } = useAppContext();
-  const [price, setPrice] = useState<number>(0);
+  const { price, setPrice } = useAppContext();
 
   useEffect(() => {
     let newProductInCart = { id: cartPhones, count: 1, fullPrice: price };
@@ -121,6 +121,7 @@ export const ProductPage = () => {
         setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr ? [...prevCartPhonesArr, newProductInCart] : [newProductInCart]);
       }
     }
+    console.log(price)
     setCartPhones('');
     setPrice(0);
   }, [cartPhones, prevCartPhonesArr]);
@@ -196,7 +197,6 @@ export const ProductPage = () => {
               </h4>
               <ul className="product__main__cards__preview__characteristics__colors">
                 {gotProduct?.colorsAvailable.map((color) => (
-                  // <NavLink to={`/phones/${selectedProduct}`}>
                   <li
                     key={color}
                     onClick={() => handleChengeColor(color)}
@@ -211,7 +211,6 @@ export const ProductPage = () => {
                       style={{backgroundColor: COLOR_HEX[color]}}
                     />
                   </li>
-                  // </NavLink>
                 ))}
               </ul>
               <h4 className="product__main__cards__preview__characteristics__title">
@@ -240,7 +239,7 @@ export const ProductPage = () => {
                   className="product__main__cards__preview__characteristics__card-buy__buttons"
                 >
                   <div
-                    onClick={() => { selectedProduct && setCartPhones(selectedProduct), setPrice(gotProduct?.priceDiscount || 0)}}
+                    onClick={() => { selectedProduct && setCartPhones(selectedProduct), setPrice(gotProduct?.priceDiscount || price)}}
                     className={prevCartPhonesArr && prevCartPhonesArr.some(elem => elem.id === selectedProduct)
                       ? 'product__main__cards__preview__characteristics__card-buy__buttons__cart--added' 
                       : "product__main__cards__preview__characteristics__card-buy__buttons__cart"}
