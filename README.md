@@ -10,7 +10,8 @@ The project is built on functional components.
 [BEM](https://en.bem.info/) (Block Element Modifier) methodology was used in the website development, allowing the creation of independent website blocks that could be reused.
 
 ## React Phone catalog available at the link
-[Project](https://olekschernikov.github.io/IPhones-project/#/)
+[PROJECT-LINK](https://olekschernikov.github.io/IPhones-project/#/)
+[DESIGN-LINK](https://www.figma.com/file/uEetgWenSRxk9jgiym6Yzp/Phone-catalog-redesign?node-id=1%3A2)
 
 ### To work with the project locally, use the following commands
 - ```git clone``` + *URL* will allow you to download the project to your device
