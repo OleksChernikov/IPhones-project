@@ -52,11 +52,17 @@ export const ProductPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const { favoritePhones, setFavoritePhones } = useAppContext();
   const { prevFavoriteArr, setPrevFavoriteArr } = useAppContext();
-  // eslint-disable-next-line max-len
-  const [previewSelected, setPreviewSelected] = useState<string | undefined>('');
   const [colorSelected, setColorSelected] = useState('');
   const [memorySelected, setMemorySelected] = useState('');
+  const [
+    previewSelected,
+    setPreviewSelected
+  ] = useState<string | undefined>('');
   const url = `https://mate-academy.github.io/react_phone-catalog/_new/products/${selectedProduct}.json`;
+  const navigate = useNavigate();
+  const { cartPhones, setCartPhones } = useAppContext();
+  const { prevCartPhonesArr, setPrevCartPhonesArr } = useAppContext();
+  const { price, setPrice } = useAppContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +82,7 @@ export const ProductPage = () => {
     };
 
     fetchData();
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, [url]);
 
   useEffect(() => {
@@ -86,7 +92,6 @@ export const ProductPage = () => {
       setMemorySelected(gotProduct.capacity);
     }
   }, [gotProduct]);
-  const navigate = useNavigate();
 
   const handleChengeColor = (color: any) => {
     if (selectedProduct) {
@@ -101,39 +106,39 @@ export const ProductPage = () => {
   const handleChengeCapacity = (capacity: any) => {
     if (selectedProduct) {
       const splitString = selectedProduct.split('-');
+
       splitString[splitString.length - 2] = capacity.toLowerCase();
       const newSelectProduct = splitString.join('-');
       setSelectedProduct(newSelectProduct);
-      navigate(`/phones/${newSelectProduct}`)
-    }
-  }
-
-  const { cartPhones, setCartPhones } = useAppContext();
-  const { prevCartPhonesArr, setPrevCartPhonesArr } = useAppContext();
-  const { price, setPrice } = useAppContext();
+      navigate(`/phones/${newSelectProduct}`);
+    };
+  };
 
   useEffect(() => {
     let newProductInCart = { id: cartPhones, count: 1, fullPrice: price };
-    if (cartPhones.trim() !== "") {
+    if (cartPhones.trim() !== '') {
       if (prevCartPhonesArr?.some(elem => elem.id === cartPhones)) {
         setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr?.filter(phone => phone.id !== cartPhones));
       } else {
         setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr ? [...prevCartPhonesArr, newProductInCart] : [newProductInCart]);
       }
     }
-    console.log(price)
+
     setCartPhones('');
     setPrice(0);
   }, [cartPhones, prevCartPhonesArr]);
 
   useEffect(() => {
-    if (favoritePhones.trim() !== "") {
+    if (favoritePhones.trim() !== '') {
       if (prevFavoriteArr?.includes(favoritePhones)) {
-        setPrevFavoriteArr(prevFavoriteArr => prevFavoriteArr?.filter(phone => phone !== favoritePhones));
+        setPrevFavoriteArr(prevFavoriteArr?.filter(phone => phone !== favoritePhones));
       } else {
-        setPrevFavoriteArr(prevFavoriteArr => (prevFavoriteArr ? [...prevFavoriteArr, favoritePhones] : [favoritePhones]));
+        setPrevFavoriteArr((prevFavoriteArr
+          ? [...prevFavoriteArr, favoritePhones]
+          : [favoritePhones]));
       }
     }``
+
     setFavoritePhones(''); 
   }, [favoritePhones, prevFavoriteArr]);
 
@@ -145,6 +150,7 @@ export const ProductPage = () => {
 
   useEffect(() => {
     const savedValue = localStorage.getItem('savedCartName');
+
     if (savedValue) {
       setPrevCartPhonesArr(JSON.parse(savedValue));
     }
@@ -158,9 +164,10 @@ export const ProductPage = () => {
 
   useEffect(() => {
     const savedValue = localStorage.getItem('savedCartName');
+
     if (savedValue) {
       setPrevCartPhonesArr(JSON.parse(savedValue));
-    }
+    };
   }, []);
 
   return (
@@ -175,7 +182,6 @@ export const ProductPage = () => {
                   key={imgUrl}
                   className={cn(
                     'product__main__cards__preview__img',
-                    // eslint-disable-next-line max-len
                     { 'product__main__cards__preview__img--active': imgUrl === previewSelected },
                   )}
                   src={`https://mate-academy.github.io/react_phone-catalog/_new/${imgUrl}`}
@@ -253,20 +259,36 @@ export const ProductPage = () => {
                   />
                 </div>
                 <div className="product__main__cards__preview__characteristics__card-buy__info">
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">Screen</div>
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">{gotProduct?.screen}</div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">
+                    Screen
+                  </div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">
+                    {gotProduct?.screen}
+                  </div>
                 </div>
                 <div className="product__main__cards__preview__characteristics__card-buy__info">
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">Resolution</div>
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">{gotProduct?.resolution}</div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">
+                    Resolution
+                  </div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">
+                    {gotProduct?.resolution}
+                  </div>
                 </div>
                 <div className="product__main__cards__preview__characteristics__card-buy__info">
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">Processor</div>
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">{gotProduct?.processor}</div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">
+                    Processor
+                  </div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">
+                    {gotProduct?.processor}
+                  </div>
                 </div>
                 <div className="product__main__cards__preview__characteristics__card-buy__info">
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">RAM</div>
-                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">{gotProduct?.ram}</div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__name">
+                    RAM
+                  </div>
+                  <div className="product__main__cards__preview__characteristics__card-buy__info__param">
+                    {gotProduct?.ram}
+                  </div>
                 </div>
               </div>
             </div>
@@ -291,39 +313,71 @@ export const ProductPage = () => {
               </h3>
               <div className="product__main__info__specs__card">
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Screen</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.screen}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Screen
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.screen}
+                  </span>
                 </div>
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Resolution</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.resolution}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Resolution
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.resolution}
+                  </span>
                 </div>
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Processor</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.processor}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Processor
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.processor}
+                  </span>
                 </div>
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">RAM</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.ram}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    RAM
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.ram}
+                  </span>
                 </div>
                 
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Built in memory</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.capacity}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Built in memory
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.capacity}
+                  </span>
                 </div>
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Camera</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.camera}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Camera
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.camera}
+                  </span>
                 </div>
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Zoom</span>
-                  <span className="product__main__info__specs__card__row__param">{gotProduct?.zoom}</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Zoom
+                  </span>
+                  <span className="product__main__info__specs__card__row__param">
+                    {gotProduct?.zoom}
+                  </span>
                 </div>
                 <div className="product__main__info__specs__card__row">
-                  <span className="product__main__info__specs__card__row__name">Cell</span>
+                  <span className="product__main__info__specs__card__row__name">
+                    Cell
+                  </span>
                   <div className="product__main__info__specs__card__row__param">
                     {gotProduct?.cell.map((item) => (
-                      <span className="product__main__info__specs__card__row__param__text">{`${item}, `}</span> 
+                      <span className="product__main__info__specs__card__row__param__text">
+                        {`${item}, `}
+                      </span> 
                     ))}
                   </div>
                 </div>

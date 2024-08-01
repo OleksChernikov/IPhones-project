@@ -14,11 +14,18 @@ export const Tablets = () => {
     prevCartPhonesArr,
     setPrevCartPhonesArr,
   ] = useState< string[] | undefined>();
-
   const { getPhone, setGetPhone } = useAppContext();
   const [errorMessage, setErrorMessage] = useState('');
-  // eslint-disable-next-line max-len
   const url = 'https://mate-academy.github.io/react_phone-catalog/_new/products.json';
+  const blockItemsRef = useRef<HTMLDivElement>(null);
+  const blockSortRef = useRef<HTMLDivElement>(null);
+  const getTablets = getPhone?.filter(
+    (product) => product.category === 'tablets',
+  );
+  const { setUrlState } = useAppContext();
+  const clearUrl = () => {
+    setUrlState("home");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,13 +46,6 @@ export const Tablets = () => {
 
     fetchData();
   }, []);
-
-  const blockItemsRef = useRef<HTMLDivElement>(null);
-  const blockSortRef = useRef<HTMLDivElement>(null);
-
-  const getTablets = getPhone?.filter(
-    (product) => product.category === 'tablets',
-  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -84,7 +84,7 @@ export const Tablets = () => {
       setChangeItemsOnPage(true);
     } else {
       setChangeItemsOnPage(false);
-    }
+    };
   };
 
   const handleChangeSort = () => {
@@ -92,12 +92,8 @@ export const Tablets = () => {
       setChangeSort(true);
     } else {
       setChangeSort(false);
-    }
+    };
   };
-
-  // const handleCart = (id:string) => {
-  //   cartPhones.push(id);
-  // }
 
   useEffect(() => {
     if (prevCartPhonesArr?.includes(cartPhones)) {
@@ -115,17 +111,13 @@ export const Tablets = () => {
     }
   }, [cartPhones]);
 
-  const { setUrlState } = useAppContext();
-
-  const clearUrl = () => {
-    setUrlState("home");
-  };
-
   return (
     <section className="phones__wrapper">
       <div className="phones__content">
         <div className="phones__header">
-          <h3 className="phones__header__title">Tablets</h3>
+          <h3 className="phones__header__title">
+            Tablets
+          </h3>
           <p className="phones__header__paragraph">{`${getTablets?.length} models`}</p>
           {!getTablets && !!errorMessage ? (
             <div className="phones__header__buttons">
@@ -141,8 +133,6 @@ export const Tablets = () => {
                   <span className="phones__header__buttons__sort__button__text">
                     {sortParam}
                   </span>
-                  {/* <img className="phones__header__buttons__sort__button__img"
-                  src={changeSort ? ArrowUp : ArrowDown} alt="" /> */}
                 </button>
                 {changeSort
                   && (
@@ -150,7 +140,6 @@ export const Tablets = () => {
                       className="phones__header__buttons__sort__select"
                     >
                       <span
-                        // eslint-disable-next-line
                         className="phones__header__buttons__sort__select__option"
                         onClick={() => {
                           setSortParam('Newest'); handleChangeSort();
@@ -166,7 +155,6 @@ export const Tablets = () => {
                         Newest
                       </span>
                       <span
-                        // eslint-disable-next-line
                         className="phones__header__buttons__sort__select__option"
                         onClick={() => {
                           setSortParam('Alphabetically'); handleChangeSort();
@@ -182,7 +170,6 @@ export const Tablets = () => {
                         Alphabetically
                       </span>
                       <span
-                        // eslint-disable-next-line
                         className="phones__header__buttons__sort__select__option"
                         onClick={() => {
                           setSortParam('Cheapest'); handleChangeSort();
@@ -217,9 +204,6 @@ export const Tablets = () => {
                   >
                     {itemsOnPage}
                   </span>
-                  {/* <img
-                    className="phones__header__buttons__amount__button__img"
-                    src={changeItemsOnPage ? ArrowUp : ArrowDown} alt="arrow" /> */}
                 </button>
                 {changeItemsOnPage
                   && (
@@ -310,7 +294,6 @@ export const Tablets = () => {
                       </h5>
                       
                       <h5
-                        // eslint-disable-next-line
                         className="hot-prices__goods__cards__good-card__main__info__title">
                         {phone.ram}
                         {' '}
@@ -318,12 +301,10 @@ export const Tablets = () => {
                     </div>
                   </div>
                   <div className="hot-prices__goods__cards__good-card__buttons">
-
                     <button
                       type="button"
                       className={prevCartPhonesArr
                         && prevCartPhonesArr.includes(phone.id)
-                        // eslint-disable-next-line
                         ? 'hot-prices__goods__cards__good-card__buttons__cart--added'
                         : 'hot-prices__goods__cards__good-card__buttons__cart'}
                       tabIndex={0}
@@ -337,7 +318,6 @@ export const Tablets = () => {
                     </button>
                     <button
                       type="button"
-                      // eslint-disable-next-line
                       className="hot-prices__goods__cards__good-card__buttons__favorite"
                       tabIndex={0}
                       aria-label="Previous Image"

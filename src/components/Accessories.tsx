@@ -26,10 +26,17 @@ export const Accessories = () => {
   const { sortParam, setSortParam } = useAppContext();
   const [changeSort, setChangeSort] = useState<boolean>(false);
   const [cartPhones, setCartPhones] = useState<string>('');
-  const [prevCartPhonesArr, setPrevCartPhonesArr] = useState< string[] | undefined>();
-
+  const [
+    prevCartPhonesArr,
+    setPrevCartPhonesArr,
+  ] = useState< string[] | undefined>();
   const [getPhone, setGetPhone] = useState<Phones[] | undefined>();
   const [errorMessage, setErrorMessage] = useState('');
+  const blockItemsRef = useRef<HTMLDivElement>(null);
+  const blockSortRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line max-len
+  const getTablets = getPhone?.filter((product) => product.category === 'tablets');
+
   // eslint-disable-next-line max-len
   const url = 'https://mate-academy.github.io/react_phone-catalog/_new/products.json';
 
@@ -52,11 +59,6 @@ export const Accessories = () => {
 
     fetchData();
   }, []);
-
-  const blockItemsRef = useRef<HTMLDivElement>(null);
-  const blockSortRef = useRef<HTMLDivElement>(null);
-
-  const getTablets = getPhone?.filter((product) => product.category === "tablets")
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -104,15 +106,13 @@ export const Accessories = () => {
 
   useEffect(() => {
     if (prevCartPhonesArr?.includes(cartPhones)) {
-      setPrevCartPhonesArr(prevCartPhonesArr => prevCartPhonesArr?.filter(phone => phone !== cartPhones));
+      setPrevCartPhonesArr(prevCartPhonesArr?.filter(phone => phone !== cartPhones));
       setCartPhones('');
     } else {
-      setPrevCartPhonesArr(prevCartPhonesArr => (prevCartPhonesArr ? [...prevCartPhonesArr, cartPhones] : [cartPhones]));
+      setPrevCartPhonesArr(prevCartPhonesArr ? [...prevCartPhonesArr, cartPhones] : [cartPhones]);
       setCartPhones('');
     }
   }, [cartPhones]);
-
-  errorMessage;
 
   const { setUrlState } = useAppContext();
 
@@ -120,7 +120,7 @@ export const Accessories = () => {
     setUrlState("home");
   };
 
-  return (
+  return (getPhone ?
     <section className="phones__wrapper">
       <div className="phones__content">
         <div className="phones__header">
@@ -132,8 +132,6 @@ export const Accessories = () => {
                 <h5 className="phones__header__buttons__sort__title">Sort by</h5>
                 <button className="phones__header__buttons__sort__button" onClick={handleChangeSort}>
                   <span className="phones__header__buttons__sort__button__text">{sortParam}</span>
-                  {/* <img className="phones__header__buttons__sort__button__img" 
-                  src={changeSort ? ArrowUp : ArrowDown} alt="" /> */}
                 </button>
                 {changeSort
                   && (
@@ -167,11 +165,13 @@ export const Accessories = () => {
               </div>
               <div className="phones__header__buttons__amount" ref={blockItemsRef}>
                 <h5 className="phones__header__buttons__amount__title">Items on page</h5>
-                <button className="phones__header__buttons__amount__button" onClick={handleChangeItems}>
-                  <span className="phones__header__buttons__amount__button__text">{itemsOnPage}</span>
-                  {/* <img 
-                    className="phones__header__buttons__amount__button__img"
-                    src={changeItemsOnPage ? ArrowUp : ArrowDown} alt="arrow" /> */}
+                <button
+                  className="phones__header__buttons__amount__button"
+                  onClick={handleChangeItems}
+                >
+                  <span className="phones__header__buttons__amount__button__text">
+                    {itemsOnPage}
+                  </span>
                 </button>
                 {changeItemsOnPage
                   && (
@@ -203,7 +203,8 @@ export const Accessories = () => {
                       <span
                         className="phones__header__buttons__amount__select__option"
                         onClick={() => {
-                          setItemsOnPage(getPhone?.length); handleChangeItems();
+                          setItemsOnPage(getPhone?.length);
+                          handleChangeItems();
                         }}
                       >
                         all
@@ -270,12 +271,18 @@ export const Accessories = () => {
 
                     <button
                       type="button"
-                      className={prevCartPhonesArr && prevCartPhonesArr.includes(phone.id) ? 'hot-prices__goods__cards__good-card__buttons__cart--added' : 'hot-prices__goods__cards__good-card__buttons__cart'}
+                      className={prevCartPhonesArr && prevCartPhonesArr.includes(phone.id)
+                        ? 'hot-prices__goods__cards__good-card__buttons__cart--added'
+                        : 'hot-prices__goods__cards__good-card__buttons__cart'
+                      }
                       tabIndex={0}
                       aria-label="Previous Image"
                       onClick={() => setCartPhones(phone.id)}
                     >
-                      {prevCartPhonesArr && prevCartPhonesArr.includes(phone.id) ? 'Added to cart' : 'Add to cart'}
+                      {prevCartPhonesArr && prevCartPhonesArr.includes(phone.id)
+                        ? 'Added to cart'
+                        : 'Add to cart'
+                      }
                     </button>
                     <button
                       type="button"
@@ -290,6 +297,9 @@ export const Accessories = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section> : 
+    <div>
+      {errorMessage}
+    </div>
   );
 }

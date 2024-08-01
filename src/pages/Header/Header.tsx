@@ -113,134 +113,137 @@ export const Header = () => {
 
   return (
     <>
-    <header className="header">
-      <NavLink to="/" data-cy="categoryLinksContainer" end>
-        <img src={Logo} className="header__logo" alt="logo" />
-      </NavLink>
-      <nav className="nav" data-cy="categoryLinksContainer">
-        <ul className="nav__list">
-          <NavLink
-            to="/"
-            className={cn(
-              'nav__list__link',
-              { underline: urlState?.includes('home') },
-            )}
-            onClick={() => handleClick('home')}
+      <header className="header">
+        <NavLink to="/" data-cy="categoryLinksContainer" end>
+          <img src={Logo} className="header__logo" alt="logo" />
+        </NavLink>
+        <nav className="nav" data-cy="categoryLinksContainer">
+          <ul className="nav__list">
+            <NavLink
+              to="/"
+              className={cn(
+                'nav__list__link',
+                { underline: urlState?.includes('home') },
+              )}
+              onClick={() => handleClick('home')}
+            >
+              <li className="nav__list__link__text">
+                Home
+              </li>
+            </NavLink>
+            <NavLink
+              to="phones"
+              className={cn(
+                'nav__list__link',
+                { underline: urlState?.includes('phones') },
+              )}
+              onClick={() => handleClick('phones')}
+            >
+              <li className="nav__list__link__text">
+                Phones
+              </li>
+            </NavLink>
+            <NavLink
+              to="tablets"
+              className={cn(
+                'nav__list__link',
+                { underline: urlState?.includes('tablets') },
+              )}
+              onClick={() => handleClick('tablets')}
+            >
+              <li className="nav__list__link__text">
+                Tablets
+              </li>
+            </NavLink>
+            <NavLink
+              to="accessories"
+              className={cn(
+                'nav__list__link',
+                { underline: urlState?.includes('accessories') },
+              )}
+              onClick={() => handleClick('accessories')}
+            >
+              <li className="nav__list__link__text">
+                Accessories
+              </li>
+            </NavLink>
+          </ul>
+        </nav>
+        {(urlState === 'phones' && !selectedProduct) && (
+        <label className="header__search">
+          <input
+            type="text"
+            value={query}
+            placeholder="Search in phones..."
+            className="header__search__input"
+            onChange={handleChangeQuery}
+          />
+          <button
+            className="header__link"
+            onClick={handleCleanSearch}
           >
-            <li className="nav__list__link__text">
-              Home
-            </li>
-          </NavLink>
-          <NavLink
-            to="phones"
-            className={cn(
-              'nav__list__link',
-              { underline: urlState?.includes('phones') },
-            )}
-            onClick={() => handleClick('phones')}
-          >
-            <li className="nav__list__link__text">
-              Phones
-            </li>
-          </NavLink>
-          <NavLink
-            to="tablets"
-            className={cn(
-              'nav__list__link',
-              { underline: urlState?.includes('tablets') },
-            )}
-            onClick={() => handleClick('tablets')}
-          >
-            <li className="nav__list__link__text">
-              Tablets
-            </li>
-          </NavLink>
-          <NavLink
-            to="accessories"
-            className={cn(
-              'nav__list__link',
-              { underline: urlState?.includes('accessories') },
-            )}
-            onClick={() => handleClick('accessories')}
-          >
-            <li className="nav__list__link__text">
-              Accessories
-            </li>
-          </NavLink>
-        </ul>
-      </nav>
-      {(urlState === 'phones' && !selectedProduct) && (
-      <label className="header__search">
-        <input
-          type="text"
-          value={query}
-          placeholder="Search in phones..."
-          className="header__search__input"
-          onChange={handleChangeQuery}
-        />
-        <button
-          className="header__link"
-          onClick={handleCleanSearch}
+            <img
+              src={!query ? Search : Close}
+              className="header__link-icon-search"
+              alt="Search"
+            />
+          </button>
+        </label>)}
+        <NavLink
+          to="favorite"
+          className={cn(
+            "header__link",
+            " favorites ",
+            { header__link__after: urlState?.includes('favorite') },
+          )}
+          onClick={() => handleClick('favorite')}
+        >
+          {prevFavoriteArr && prevFavoriteArr.length > 0 && (
+            <div className="header__link__pop-up">
+              {prevFavoriteArr.length}
+            </div>
+          )}
+          <img
+            src={Favorite}
+            className="header__link-icon"
+            alt="Favorite"
+          />
+        </NavLink>
+        <NavLink
+          to="cart"
+          className={cn(
+            "header__link",
+            "basket",
+            { header__link__after: urlState?.includes('cart') },
+          )}
+          onClick={() => handleClick('cart')}
+        >
+          {prevCartPhonesArr && prevCartPhonesArr.length > 0 && (
+            <div className="header__link__pop-up">
+              {prevCartPhonesArr?.reduce((total, item) => total + item.count, 0)}
+            </div>
+          )}
+          <img
+            src={Basket}
+            className="header__link-icon"
+            alt=""
+          />
+        </NavLink>
+        <div
+          className={cn(
+            "header__link",
+            "basket",
+            "display-none"
+          )}
+          onClick={() => setIsMenuBurger(!isMenuBurger)}
         >
           <img
-            src={!query ? Search : Close}
-            className="header__link-icon-search"
-            alt="Search"
+            src={MenuBurger}
+            className="header__link-icon"
+            alt=""
           />
-        </button>
-      </label>)}
-      <NavLink
-        to="favorite"
-        className={cn(
-          "header__link",
-          " favorites ",
-          { header__link__after: urlState?.includes('favorite') },
-        )}
-        onClick={() => handleClick('favorite')}
-      >
-        {prevFavoriteArr && prevFavoriteArr.length > 0 && (
-          <div className="header__link__pop-up">{prevFavoriteArr.length}</div>
-        )}
-        <img
-          src={Favorite}
-          className="header__link-icon"
-          alt="Favorite"
-        />
-      </NavLink>
-      <NavLink
-        to="cart"
-        // className="header__link__nav-link"
-        className={cn(
-          "header__link",
-          "basket",
-          { header__link__after: urlState?.includes('cart') },
-        )}
-        onClick={() => handleClick('cart')}
-      >
-        {prevCartPhonesArr && prevCartPhonesArr.length > 0 && (
-          <div className="header__link__pop-up">{prevCartPhonesArr?.reduce((total, item) => total + item.count, 0)}</div>
-        )}
-        <img
-          src={Basket}
-          className="header__link-icon"
-          alt=""
-        />
-      </NavLink>
-      <div
-        className={cn(
-          "header__link",
-          "basket",
-          "display-none"
-        )}
-        onClick={() => setIsMenuBurger(!isMenuBurger)}
-      >
-        <img
-          src={MenuBurger}
-          className="header__link-icon"
-          alt=""
-        />
-      </div>
-    </header>
+        </div>
+      </header>
     </>
   );
 };
